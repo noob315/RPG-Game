@@ -1,2 +1,5 @@
-# RPG-Game
- just for learning
+## RPG game (Just for learning)
+
+Still in progress
+
+Reference(youtube): RyiSnow 
