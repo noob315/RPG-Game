@@ -2,21 +2,25 @@ package main;
 
 import java.awt.*;
 import javax.swing.JPanel;
-
 import entity.Player;
 import tiles.TilesManager;
 
 public class GamePanel extends JPanel implements Runnable {
-
+    //screen size setting
     public int titleSize = 16 * 3;
     int row = 14;
     int column = 18;
     public int windowWidth = column * titleSize;
     public int windowHeight = row * titleSize;
+    //world map size setting
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = maxWorldCol * titleSize;
+    public final int worldHeight = maxWorldRow * titleSize;
 
     Thread thread;
     Keyboard keys = new Keyboard();
-    Player player = new Player(this, keys);
+    public Player player = new Player(this, keys);
     TilesManager tileM = new TilesManager(this);
 
     int FPS = 60;
@@ -67,8 +71,13 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        //long drawstart = 0;
+        //drawstart = System.nanoTime();
         tileM.draw(g2);
         player.draw(g2);
+        //long drawend = System.nanoTime();
+        //long passed = drawend - drawstart;
+        //System.out.println("time : " + passed);
         g2.dispose();
     }
 }

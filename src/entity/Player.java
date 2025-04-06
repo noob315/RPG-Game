@@ -11,15 +11,18 @@ import main.*;
 public class Player extends Entity {
     GamePanel gp;
     Keyboard keys;
+    public final int screenX;
+    public final int screenY;
 
     public Player(GamePanel gp, Keyboard keys) {
-        x = 150;
-        y = 150;
+        worldX = gp.titleSize * 25;
+        worldY = gp.titleSize * 25;
         speed = 5;
         direction = "down_stop";
         this.gp = gp;
         this.keys = keys;
-
+        screenX = gp.windowWidth/2 - (gp.titleSize/2);  //Always display player at the center of X
+        screenY = gp.windowHeight/2 - (gp.titleSize/2); //Always display player at the center of Y
         getPlayerImage();
     }
 
@@ -72,18 +75,18 @@ public class Player extends Entity {
             if (movingVertical) {
                 if (keys.upside) {
                     direction = "up";
-                    y -= speed;
+                    worldY -= speed;
                 } else if (keys.downside) {
                     direction = "down";
-                    y += speed;
+                    worldY += speed;
                 }
             } else if (movingHorizontal) {
                 if (keys.leftside) {
                     direction = "left";
-                    x -= speed;
+                    worldX -= speed;
                 } else if (keys.rightside) {
                     direction = "right";
-                    x += speed;
+                    worldX += speed;
                 }
             }
 
@@ -207,6 +210,6 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, x, y, gp.titleSize, gp.titleSize, null);
+        g2.drawImage(image, screenX, screenY, gp.titleSize, gp.titleSize, null);
     }
 }
