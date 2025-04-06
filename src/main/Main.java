@@ -6,8 +6,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         int titleSize = 16 * 3;
-        int row = 16;
-        int column = 21;
+        int row = 14;
+        int column = 18;
         int windowWidth = column * titleSize;
         int windowHeight = row * titleSize;
 

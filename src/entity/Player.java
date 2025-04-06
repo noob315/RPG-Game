@@ -10,9 +10,9 @@ import main.*;
 
 public class Player extends Entity {
     GamePanel gp;
-    keyboard keys;
+    Keyboard keys;
 
-    public Player(GamePanel gp, keyboard keys) {
+    public Player(GamePanel gp, Keyboard keys) {
         x = 150;
         y = 150;
         speed = 5;

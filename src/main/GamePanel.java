@@ -4,24 +4,27 @@ import java.awt.*;
 import javax.swing.JPanel;
 
 import entity.Player;
+import tiles.TilesManager;
 
 public class GamePanel extends JPanel implements Runnable {
+
     public int titleSize = 16 * 3;
-    int row = 16;
-    int column = 21;
-    int windowWidth = column * titleSize;
-    int windowHeight = row * titleSize;
+    int row = 14;
+    int column = 18;
+    public int windowWidth = column * titleSize;
+    public int windowHeight = row * titleSize;
 
     Thread thread;
-    keyboard keys = new keyboard();
+    Keyboard keys = new Keyboard();
     Player player = new Player(this, keys);
+    TilesManager tileM = new TilesManager(this);
 
     int FPS = 60;
 
 
     GamePanel() {
         setPreferredSize(new Dimension(windowWidth, windowHeight));
-        setBackground(Color.BLUE);
+        setBackground(Color.black);
         addKeyListener(keys);
         setFocusable(true);
 
@@ -64,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        tileM.draw(g2);
         player.draw(g2);
         g2.dispose();
     }

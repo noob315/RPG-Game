@@ -3,7 +3,7 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class keyboard implements KeyListener {
+public class Keyboard implements KeyListener {
     public boolean upside, downside, leftside, rightside;
 
     @Override
