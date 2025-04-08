@@ -15,14 +15,15 @@ public class Player extends Entity {
     public final int screenY;
 
     public Player(GamePanel gp, Keyboard keys) {
-        worldX = gp.titleSize * 25;
+        worldX = gp.titleSize * 25; // charcter starting points
         worldY = gp.titleSize * 25;
         speed = 5;
         direction = "down_stop";
         this.gp = gp;
         this.keys = keys;
-        screenX = gp.windowWidth/2 - (gp.titleSize/2);  //Always display player at the center of X
-        screenY = gp.windowHeight/2 - (gp.titleSize/2); //Always display player at the center of Y
+        screenX = gp.windowWidth / 2 - (gp.titleSize / 2); // Always display player at the center of X
+        screenY = gp.windowHeight / 2 - (gp.titleSize / 2); // Always display player at the center of Y
+        solidArea = new Rectangle(8, 16, 32, 32); // top left corner coordinate: (8,16)
         getPlayerImage();
     }
 
@@ -75,18 +76,37 @@ public class Player extends Entity {
             if (movingVertical) {
                 if (keys.upside) {
                     direction = "up";
-                    worldY -= speed;
+
                 } else if (keys.downside) {
                     direction = "down";
-                    worldY += speed;
+
                 }
             } else if (movingHorizontal) {
                 if (keys.leftside) {
                     direction = "left";
-                    worldX -= speed;
+
                 } else if (keys.rightside) {
                     direction = "right";
-                    worldX += speed;
+
+                }
+            }
+            collisionOn = false;
+            gp.ColliChecker.checkTile(this);
+
+            if (collisionOn == false) {
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
                 }
             }
 
@@ -171,8 +191,8 @@ public class Player extends Entity {
                 }
                 break;
             case "up":
-                if (animeNum == 1 || animeNum == 3) { //handling transition from left/right 3 to up/down 1
-                    image = up1; 
+                if (animeNum == 1 || animeNum == 3) { // handling transition from left/right 3 to up/down 1
+                    image = up1;
                 }
                 if (animeNum == 2) {
                     image = up2;

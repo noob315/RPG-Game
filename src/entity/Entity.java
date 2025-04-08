@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -12,5 +13,6 @@ public class Entity {
 
     public int animeCount = 0;
     public int animeNum = 1;
-
+    public Rectangle solidArea;
+    public boolean collisionOn = false;
 }

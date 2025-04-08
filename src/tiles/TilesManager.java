@@ -11,8 +11,8 @@ import main.UtilityTool;
 
 public class TilesManager {
     GamePanel gp;
-    Tiles[] tiles;
-    int mapTilesNum[][];
+    public Tiles[] tiles;
+    public int mapTilesNum[][];
     boolean[][] tileChanged;
     String filepath = "src/tiles/map_img/map_02.txt";
     BufferedImage backgroundImage;
@@ -51,20 +51,21 @@ public class TilesManager {
          * }
          */
 
-        setup(0, "grass_1");
-        setup(1, "tree_1");
-        setup(2, "water_1");
-        setup(3, "path_1");
+        setup(0, "grass_1", false);
+        setup(1, "tree_1", true);
+        setup(2, "water_1", false);
+        setup(3, "path_1", false);
 
     }
 
-    public void setup(int index, String imagePath) {
+    public void setup(int index, String imagePath, boolean collsion) {
         UtilityTool uTool = new UtilityTool();
         try {
             tiles[index] = new Tiles();
             File background = new File("src/tiles/tiles_img/" + imagePath + ".png");
             tiles[index].image = ImageIO.read(background);
             tiles[index].image = uTool.scaleImage(tiles[index].image, gp.titleSize, gp.titleSize);
+            tiles[index].collision = collsion;
 
         } catch (Exception e) {
         }
@@ -80,7 +81,6 @@ public class TilesManager {
 
             for (int col = 0; col < values.length && col < mapTilesNum[row].length; col++) {
                 mapTilesNum[row][col] = Integer.parseInt(values[col]);
-                //tileChanged[row][col] = false;
             }
             row++;
         }
@@ -104,6 +104,7 @@ public class TilesManager {
             int worldY = WorldRow * gp.titleSize;
 
             g2.drawImage(tiles[tileNum].image, worldX, worldY, gp.titleSize, gp.titleSize, null);
+
             WorldCol++;
 
             if (WorldCol == gp.maxWorldCol) {
@@ -121,10 +122,12 @@ public class TilesManager {
     }
 
     public void draw(Graphics2D g2) {
-        int screenX = gp.player.worldX - gp.player.screenX;;
+        int screenX = gp.player.worldX - gp.player.screenX;
+        ;
         int screenY = gp.player.worldY - gp.player.screenY;
-        g2.drawImage(backgroundImage, -screenX, -screenY, null); // Draw the pre-rendered background
 
+        g2.drawImage(backgroundImage, -screenX, -screenY, null);
+        // Draw the pre-rendered background
     }
 
     /*

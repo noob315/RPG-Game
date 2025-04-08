@@ -3,6 +3,8 @@ package main;
 import java.awt.*;
 import javax.swing.JPanel;
 import entity.Player;
+import objects.AssetSetter;
+import objects.SuperObject;
 import tiles.TilesManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -20,10 +22,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread thread;
     Keyboard keys = new Keyboard();
+    public CollisionChecker ColliChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keys);
     TilesManager tileM = new TilesManager(this);
+    public SuperObject obj[] = new SuperObject[10]; //Number of objects display on the screen
 
-    int FPS = 60;
+    int FPS = 60; //60 frames per second
+
+    public int gameState;
+    public final int playState = 1;
+    public final int stopState = 0;
 
 
     GamePanel() {
@@ -33,7 +42,9 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusable(true);
 
     }
-
+    public void setupGame() {
+        aSetter.setObject();
+    }
     public void gameThread() {
         thread = new Thread(this);
         thread.start();
@@ -71,13 +82,18 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        //long drawstart = 0;
-        //drawstart = System.nanoTime();
+        long drawstart = 0;
+        drawstart = System.nanoTime();
         tileM.draw(g2);
+        for (int i = 0; i < obj.length; i++) {
+            if(obj[i] != null) {
+                obj[i].draw(g2, this);
+            }
+        }
         player.draw(g2);
-        //long drawend = System.nanoTime();
-        //long passed = drawend - drawstart;
-        //System.out.println("time : " + passed);
+        long drawend = System.nanoTime();
+        long passed = drawend - drawstart;
+        System.out.println("time : " + passed);
         g2.dispose();
     }
 }
